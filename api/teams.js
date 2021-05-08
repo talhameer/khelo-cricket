@@ -1,25 +1,34 @@
 const express = require("express");
+const multer = require("multer");
+const path = require("path");
 const db = require("../config/database");
 
 const router = express.Router();
 
-router.post("/createTeam", (req, res) => {
+const storage = multer.diskStorage({
+    destination: "./public/uploads",
+    filename: (req, file, cb) => {
+        cb(
+            null,
+            file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+        );
+    },
+});
+
+let upload = multer({ storage });
+
+router.post("/createTeam", upload.single("logo"), (req, res) => {
     let query = "SELECT MAX(`id`) as id FROM `teams`";
 
     db.query(query, (err, result) => {
         if (err) throw err;
         result = JSON.parse(JSON.stringify(result));
 
-        query =
-            "INSERT INTO `teams` (`id`, `name`, `logo`, `coach`, `sponsor`) VALUES ('" +
-            (result[0].id + 1) +
-            "', '" +
-            req.body.name +
-            "', NULL, '" +
-            req.body.coach +
-            "', '" +
-            req.body.sponsor +
-            "')";
+        query = `INSERT INTO teams (id, name, logo, coach, sponsor) VALUES ('${
+            result[0].id + 1
+        }', '${req.body.name}', '/uploads/${req.file.filename}', '${
+            req.body.coach
+        }', '${req.body.sponsor}')`;
 
         db.query(query, (err, result) => {
             if (err) throw err;

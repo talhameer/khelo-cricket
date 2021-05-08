@@ -13,6 +13,7 @@ const matches = require("./api/matches");
 const app = express();
 
 app.use(express.json());
+app.use(express.static(__dirname + "/public"));
 
 app.use("/api/", players);
 app.use("/api/", teams);
