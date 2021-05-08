@@ -8,6 +8,7 @@ const fs = require("fs");
 const players = require("./api/players");
 const teams = require("./api/teams");
 const tournaments = require("./api/tournaments");
+const matches = require("./api/matches");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/api/", players);
 app.use("/api/", teams);
 app.use("/api/", tournaments);
+app.use("/api/", matches);
 
 app.get("/createDB", (req, res) => {
     let sql = "CREATE DATABASE test_DB";
