@@ -35,6 +35,16 @@ router.get("/getPlayers", (req, res) => {
     });
 });
 
+router.get("/getTeamPlayers/:id", (req, res) => {
+    const sql = `SELECT * FROM players where team = ${req.params.id}`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.send(JSON.stringify(result));
+    });
+});
+
 router.get("/getPlayer/:id", (req, res) => {
     const sql = "SELECT * FROM `players` where id=" + req.params.id;
 
