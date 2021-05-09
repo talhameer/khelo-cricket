@@ -24,10 +24,12 @@ router.post("/createTeam", upload.single("logo"), (req, res) => {
         if (err) throw err;
         result = JSON.parse(JSON.stringify(result));
 
-        query = `INSERT INTO teams (id, name, logo, coach, sponsor) VALUES ('${
+        query = `INSERT INTO teams (id, name, logo, coach, coach_experience, coach_expertise, coach_dob, sponsor) VALUES ('${
             result[0].id + 1
         }', '${req.body.name}', '/uploads/${req.file.filename}', '${
             req.body.coach
+        }', '${req.body.coach_experience}', '${req.body.coach_expertise}', '${
+            req.body.coach_dob
         }', '${req.body.sponsor}')`;
 
         db.query(query, (err, result) => {
@@ -49,6 +51,16 @@ router.get("/getTeams", (req, res) => {
 
 router.get("/getTeam/:id", (req, res) => {
     const sql = `SELECT * FROM teams where id = ${req.params.id}`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.send(JSON.stringify(result));
+    });
+});
+
+router.get("/getTeamCoach/:id", (req, res) => {
+    const sql = `SELECT  coach, coach_dob, coach_experience, coach_expertise FROM teams where id = ${req.params.id}`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
