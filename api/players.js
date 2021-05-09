@@ -4,20 +4,7 @@ const db = require("../config/database");
 const router = express.Router();
 
 router.post("/createPlayer", (req, res) => {
-    const sql =
-        "INSERT INTO `players` (`name`, `dob`, `role`, `batting_style`, `bowling_style`, `team`) VALUES ('" +
-        req.body.name +
-        "', '" +
-        req.body.dob +
-        "', '" +
-        req.body.role +
-        "', '" +
-        req.body.batting_style +
-        "', '" +
-        req.body.bowling_style +
-        "', '" +
-        req.body.teamID +
-        "')";
+    const sql = `INSERT INTO players (name, dob, height, role, batting_style, bowling_style, team) VALUES ('${req.body.name}', '${req.body.dob}', '${req.body.height}', '${req.body.role}', '${req.body.batting_style}', '${req.body.bowling_style}', '${req.body.teamID}')`;
     db.query(sql, (err, result) => {
         if (err) throw err;
 
