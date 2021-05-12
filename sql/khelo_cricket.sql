@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2021 at 01:27 PM
+-- Generation Time: May 12, 2021 at 10:57 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -32,8 +32,19 @@ CREATE TABLE `batting_scoreboard` (
   `match_id` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
   `runs` int(11) NOT NULL,
-  `not_out` tinyint(1) DEFAULT NULL
+  `balls` int(11) DEFAULT NULL,
+  `sixes` int(11) NOT NULL,
+  `fours` int(11) NOT NULL,
+  `singles` int(11) NOT NULL,
+  `strike_rate` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `batting_scoreboard`
+--
+
+INSERT INTO `batting_scoreboard` (`id`, `match_id`, `player_id`, `runs`, `balls`, `sixes`, `fours`, `singles`, `strike_rate`) VALUES
+(4, 1, 2, 41, 25, 12, 20, 9, 1.6);
 
 -- --------------------------------------------------------
 
@@ -46,9 +57,20 @@ CREATE TABLE `bowling_scoreboard` (
   `match_id` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
   `overs` int(11) NOT NULL,
+  `median` int(11) NOT NULL,
   `runs` int(11) NOT NULL,
-  `wickets` int(11) NOT NULL
+  `wickets` int(11) NOT NULL,
+  `econ` float NOT NULL,
+  `dots` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bowling_scoreboard`
+--
+
+INSERT INTO `bowling_scoreboard` (`id`, `match_id`, `player_id`, `overs`, `median`, `runs`, `wickets`, `econ`, `dots`) VALUES
+(1, 1, 2, 4, 1, 27, 1, 1.6, 6),
+(2, 1, 3, 4, 1, 27, 1, 1.6, 6);
 
 -- --------------------------------------------------------
 
@@ -98,7 +120,7 @@ CREATE TABLE `players` (
 
 INSERT INTO `players` (`id`, `name`, `dob`, `height`, `role`, `batting_style`, `bowling_style`, `team`, `matches_played`) VALUES
 (2, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 2, 12),
-(3, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 2, 12);
+(3, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 1, 12);
 
 -- --------------------------------------------------------
 
@@ -212,13 +234,13 @@ ALTER TABLE `tournaments`
 -- AUTO_INCREMENT for table `batting_scoreboard`
 --
 ALTER TABLE `batting_scoreboard`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `bowling_scoreboard`
 --
 ALTER TABLE `bowling_scoreboard`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `matches`
