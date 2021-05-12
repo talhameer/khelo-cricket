@@ -75,6 +75,16 @@ router.get("/getMatchBowlingScoreboard/:match_id/:team_id", (req, res) => {
     });
 });
 
+router.get("/getMatchResults/:id", (req, res) => {
+    let sql = `SELECT matches.*, team1.name AS team1_name, team1.logo AS team1_logo, team2.name AS team2_name, team2.logo AS team2_logo FROM matches JOIN teams AS team1 ON matches.team1 = team1.id JOIN teams AS team2 ON matches.team2 = team2.id WHERE matches.id = 1`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.json(result);
+    });
+});
+
 router.put("", (req, res) => {});
 
 router.delete("", (req, res) => {});
