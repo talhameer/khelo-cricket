@@ -55,6 +55,26 @@ router.get("/getMatchPlayers/:id", (req, res) => {
     });
 });
 
+router.get("/getMatchBattingScoreboard/:match_id/:team_id", (req, res) => {
+    let sql = `SELECT batting_scoreboard.* FROM batting_scoreboard LEFT JOIN players ON batting_scoreboard.player_id = players.id WHERE match_id = ${req.params.match_id} AND players.team = ${req.params.team_id}`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.json(result);
+    });
+});
+
+router.get("/getMatchBowlingScoreboard/:match_id/:team_id", (req, res) => {
+    let sql = `SELECT bowling_scoreboard.* FROM bowling_scoreboard LEFT JOIN players ON bowling_scoreboard.player_id = players.id WHERE match_id = ${req.params.match_id} AND players.team = ${req.params.team_id}`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.json(result);
+    });
+});
+
 router.put("", (req, res) => {});
 
 router.delete("", (req, res) => {});
