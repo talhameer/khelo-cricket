@@ -12,6 +12,25 @@ router.post("/createPlayer", (req, res) => {
     });
 });
 
+router.post("/setPlayerBattingScore/:id", (req, res) => {
+    let runs = req.body.fours + req.body.sixes + req.body.singles;
+    const sql = `INSERT INTO batting_scoreboard (player_id, match_id, runs, balls, sixes, fours, singles, strike_rate) VALUES ('${req.params.id}', '${req.body.match_id}', '${runs}', '${req.body.balls}', '${req.body.sixes}', '${req.body.fours}', '${req.body.singles}', '${req.body.strike_rate}')`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.send(JSON.stringify(result));
+    });
+});
+
+router.post("/setPlayerBowlingScore/:id", (req, res) => {
+    const sql = `INSERT INTO bowling_scoreboard (player_id, match_id, overs, median, runs, wickets, econ, dots) VALUES ('${req.params.id}', '${req.body.match_id}', '${req.body.overs}', '${req.body.median}', '${req.body.runs}', '${req.body.wickets}', '${req.body.econ}', '${req.body.dots}')`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.send(JSON.stringify(result));
+    });
+});
+
 router.get("/getPlayers", (req, res) => {
     const sql = "SELECT * FROM `players`";
 
