@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 
 const db = require("./config/database");
 
@@ -12,6 +13,7 @@ const matches = require("./api/matches");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2021 at 01:47 PM
+-- Generation Time: May 16, 2021 at 06:09 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -83,18 +83,21 @@ CREATE TABLE `matches` (
   `team1` int(11) NOT NULL,
   `team2` int(11) NOT NULL,
   `tournament_id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
   `team1_runs` int(11) DEFAULT NULL,
   `team2_runs` int(11) DEFAULT NULL,
-  `winner` int(11) NOT NULL
+  `winner` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `matches`
 --
 
-INSERT INTO `matches` (`id`, `team1`, `team2`, `tournament_id`, `team1_runs`, `team2_runs`, `winner`) VALUES
-(1, 1, 2, 1, 300, 299, 1),
-(2, 1, 3, 1, 300, 299, 1);
+INSERT INTO `matches` (`id`, `team1`, `team2`, `tournament_id`, `date`, `time`, `team1_runs`, `team2_runs`, `winner`) VALUES
+(1, 1, 2, 1, NULL, NULL, 300, 299, 1),
+(2, 1, 3, 1, NULL, NULL, 300, 299, 1),
+(3, 2, 4, 1, '2021-10-12', '09:00:00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -119,7 +122,7 @@ CREATE TABLE `players` (
 --
 
 INSERT INTO `players` (`id`, `name`, `dob`, `height`, `role`, `batting_style`, `bowling_style`, `team`, `is_retired`) VALUES
-(2, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 2, 0),
+(2, 'Talha Meer', '0000-00-00', '', 'bowler', 'Right Hand', 'Left Hand', 1, 0),
 (3, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 1, 0);
 
 -- --------------------------------------------------------
@@ -145,7 +148,7 @@ CREATE TABLE `teams` (
 --
 
 INSERT INTO `teams` (`id`, `name`, `logo`, `is_active`, `coach`, `coach_experience`, `coach_expertise`, `coach_dob`, `sponsor`) VALUES
-(1, 'Pakistan', NULL, 1, 'Misbah', 0, '', NULL, 'Talha Meer'),
+(1, 'Pakistan', '/logo/path', 1, 'Misbah', 0, '', NULL, 'Talha Meer'),
 (2, 'Ireland', NULL, 1, 'XYZ', 0, '', NULL, 'ABC'),
 (3, 'UK', NULL, 1, 'XYZ', 0, '', NULL, 'ABC'),
 (4, 'Ireland', '/uploads/logo-1620487252545.png', 1, 'asdasd', 0, '', NULL, 'sasasdasd'),
@@ -247,7 +250,7 @@ ALTER TABLE `bowling_scoreboard`
 -- AUTO_INCREMENT for table `matches`
 --
 ALTER TABLE `matches`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `players`
