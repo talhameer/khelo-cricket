@@ -88,7 +88,7 @@ router.put("/updatePlayer/:id", (req, res) => {
     //     " WHERE id = " +
     //     req.params.id;
 
-    const sql = `UPDATE players SET name = '${req.body.name}', role = '${req.body.role}', dob = '${req.body.dob}', batting_style = '${req.body.batting_style}', bowling_style = '${req.body.bowling_style}', team = ${req.body.teamID}, matches_played = ${req.body.matches_played} WHERE id = ${req.params.id}`;
+    const sql = `UPDATE players SET name = '${req.body.name}', role = '${req.body.role}', dob = '${req.body.dob}', batting_style = '${req.body.batting_style}', bowling_style = '${req.body.bowling_style}', team = ${req.body.teamID} WHERE id = ${req.params.id}`;
     console.log(sql);
 
     db.query(sql, (err, result) => {
