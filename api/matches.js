@@ -85,7 +85,15 @@ router.get("/getMatchResults/:id", (req, res) => {
     });
 });
 
-router.put("", (req, res) => {});
+router.put("/updateMatch/:id", (req, res) => {
+    const sql = `UPDATE matches SET team1 = '${req.body.team1}', team2 = '${req.body.team2}', date = '${req.body.date}', time = '${req.body.time}', tournament_id = '${req.body.tournament_id}' WHERE id = ${req.params.id}`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.send(JSON.stringify(result));
+    });
+});
 
 router.delete("", (req, res) => {});
 
