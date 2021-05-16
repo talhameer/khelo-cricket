@@ -13,6 +13,16 @@ router.post("/createMatch", (req, res) => {
     });
 });
 
+router.post("/setMatchResults/:id", (req, res) => {
+    let sql = `UPDATE matches SET team1_runs = '${req.body.team1_runs}', team1_wickets = '${req.body.team1_wickets}', team2_runs = '${req.body.team2_runs}', team2_wickets = '${req.body.team2_wickets}', winner = '${req.body.winner}', statement = '${req.body.statement}' WHERE id = ${req.params.id}`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.json(result);
+    });
+});
+
 router.get("/getMatches", (req, res) => {
     const sql = `SELECT * FROM matches`;
 
@@ -76,7 +86,7 @@ router.get("/getMatchBowlingScoreboard/:match_id/:team_id", (req, res) => {
 });
 
 router.get("/getMatchResults/:id", (req, res) => {
-    let sql = `SELECT matches.*, team1.name AS team1_name, team1.logo AS team1_logo, team2.name AS team2_name, team2.logo AS team2_logo FROM matches JOIN teams AS team1 ON matches.team1 = team1.id JOIN teams AS team2 ON matches.team2 = team2.id WHERE matches.id = 1`;
+    let sql = `SELECT matches.*, team1.name AS team1_name, team1.logo AS team1_logo, team2.name AS team2_name, team2.logo AS team2_logo FROM matches JOIN teams AS team1 ON matches.team1 = team1.id JOIN teams AS team2 ON matches.team2 = team2.id WHERE matches.id = ${req.params.id}`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;

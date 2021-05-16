@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2021 at 06:09 PM
+-- Generation Time: May 16, 2021 at 07:39 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -44,7 +44,8 @@ CREATE TABLE `batting_scoreboard` (
 --
 
 INSERT INTO `batting_scoreboard` (`id`, `match_id`, `player_id`, `runs`, `balls`, `sixes`, `fours`, `singles`, `strike_rate`) VALUES
-(4, 1, 2, 41, 25, 12, 20, 9, 1.6);
+(4, 1, 2, 41, 25, 12, 20, 9, 1.6),
+(5, 1, 3, 57, 60, 12, 20, 25, 0);
 
 -- --------------------------------------------------------
 
@@ -86,18 +87,21 @@ CREATE TABLE `matches` (
   `date` date DEFAULT NULL,
   `time` time DEFAULT NULL,
   `team1_runs` int(11) DEFAULT NULL,
+  `team1_wickets` int(11) DEFAULT NULL,
   `team2_runs` int(11) DEFAULT NULL,
-  `winner` int(11) DEFAULT NULL
+  `team2_wickets` int(11) DEFAULT NULL,
+  `winner` int(11) DEFAULT NULL,
+  `statement` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `matches`
 --
 
-INSERT INTO `matches` (`id`, `team1`, `team2`, `tournament_id`, `date`, `time`, `team1_runs`, `team2_runs`, `winner`) VALUES
-(1, 1, 2, 1, NULL, NULL, 300, 299, 1),
-(2, 1, 3, 1, NULL, NULL, 300, 299, 1),
-(3, 2, 4, 1, '2021-10-12', '09:00:00', NULL, NULL, NULL);
+INSERT INTO `matches` (`id`, `team1`, `team2`, `tournament_id`, `date`, `time`, `team1_runs`, `team1_wickets`, `team2_runs`, `team2_wickets`, `winner`, `statement`) VALUES
+(1, 1, 2, 1, '2021-10-14', NULL, 300, NULL, 299, NULL, 1, NULL),
+(2, 1, 4, 1, '2021-10-12', '09:00:00', 100, 2, 99, 10, 1, 'Anything here'),
+(3, 1, 4, 1, '2021-10-10', '09:00:00', 100, 2, 99, 10, 4, 'Anything here');
 
 -- --------------------------------------------------------
 
@@ -123,7 +127,7 @@ CREATE TABLE `players` (
 
 INSERT INTO `players` (`id`, `name`, `dob`, `height`, `role`, `batting_style`, `bowling_style`, `team`, `is_retired`) VALUES
 (2, 'Talha Meer', '0000-00-00', '', 'bowler', 'Right Hand', 'Left Hand', 1, 0),
-(3, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 1, 0);
+(3, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -177,7 +181,8 @@ CREATE TABLE `tournaments` (
 
 INSERT INTO `tournaments` (`id`, `name`, `venue`, `start_date`, `end_date`, `winner`) VALUES
 (1, 'PSL Season 6', 'Karachi', '2021-04-01', '2021-04-07', 1),
-(2, 'PSL season 5', 'Lahore', '2019-12-03', '2019-12-03', 2);
+(2, 'PSL season 5', 'Lahore', '2019-12-03', '2019-12-03', 2),
+(4, 'PSL season 7', 'Lahore', '2022-11-03', '2022-12-03', NULL);
 
 --
 -- Indexes for dumped tables
@@ -238,7 +243,7 @@ ALTER TABLE `tournaments`
 -- AUTO_INCREMENT for table `batting_scoreboard`
 --
 ALTER TABLE `batting_scoreboard`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `bowling_scoreboard`
@@ -262,7 +267,7 @@ ALTER TABLE `players`
 -- AUTO_INCREMENT for table `tournaments`
 --
 ALTER TABLE `tournaments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
