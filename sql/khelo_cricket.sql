@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2021 at 10:57 AM
+-- Generation Time: May 16, 2021 at 01:47 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -111,16 +111,16 @@ CREATE TABLE `players` (
   `batting_style` varchar(25) DEFAULT NULL,
   `bowling_style` varchar(25) DEFAULT NULL,
   `team` int(11) NOT NULL,
-  `matches_played` int(11) DEFAULT NULL
+  `is_retired` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `players`
 --
 
-INSERT INTO `players` (`id`, `name`, `dob`, `height`, `role`, `batting_style`, `bowling_style`, `team`, `matches_played`) VALUES
-(2, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 2, 12),
-(3, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 1, 12);
+INSERT INTO `players` (`id`, `name`, `dob`, `height`, `role`, `batting_style`, `bowling_style`, `team`, `is_retired`) VALUES
+(2, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 2, 0),
+(3, 'Talha Meer', '2021-04-05', '', 'batsman', 'left hand', 'right hand', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -132,6 +132,7 @@ CREATE TABLE `teams` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `logo` varchar(50) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `coach` varchar(50) NOT NULL,
   `coach_experience` int(11) NOT NULL,
   `coach_expertise` varchar(25) NOT NULL,
@@ -143,14 +144,14 @@ CREATE TABLE `teams` (
 -- Dumping data for table `teams`
 --
 
-INSERT INTO `teams` (`id`, `name`, `logo`, `coach`, `coach_experience`, `coach_expertise`, `coach_dob`, `sponsor`) VALUES
-(1, 'Pakistan', NULL, 'Misbah', 0, '', NULL, 'Talha Meer'),
-(2, 'Ireland', NULL, 'XYZ', 0, '', NULL, 'ABC'),
-(3, 'UK', NULL, 'XYZ', 0, '', NULL, 'ABC'),
-(4, 'XYZ', '/uploads/logo-1620487252545.png', 'asdasd', 0, '', NULL, 'sasasdasd'),
-(5, 'XYZ', '/uploads/logo-1620487286357.png', 'asdasd', 0, '', NULL, 'sasasdasd'),
-(6, 'XYZ', '/uploads/logo-1620499346124.png', 'asdasd', 0, '', NULL, 'sasasdasd'),
-(7, 'XYZ', '/uploads/logo-1620559223334.png', 'asdasd', 5, 'batsman', '1111-11-11', 'sasasdasd');
+INSERT INTO `teams` (`id`, `name`, `logo`, `is_active`, `coach`, `coach_experience`, `coach_expertise`, `coach_dob`, `sponsor`) VALUES
+(1, 'Pakistan', NULL, 1, 'Misbah', 0, '', NULL, 'Talha Meer'),
+(2, 'Ireland', NULL, 1, 'XYZ', 0, '', NULL, 'ABC'),
+(3, 'UK', NULL, 1, 'XYZ', 0, '', NULL, 'ABC'),
+(4, 'Ireland', '/uploads/logo-1620487252545.png', 1, 'asdasd', 0, '', NULL, 'sasasdasd'),
+(5, 'Australia', '/uploads/logo-1620487286357.png', 1, 'asdasd', 0, '', NULL, 'sasasdasd'),
+(6, 'New Zealand', '/uploads/logo-1620499346124.png', 1, 'asdasd', 0, '', NULL, 'sasasdasd'),
+(7, 'Afghanistan', '/uploads/logo-1620559223334.png', 1, 'asdasd', 5, 'batsman', '1111-11-11', 'sasasdasd');
 
 -- --------------------------------------------------------
 

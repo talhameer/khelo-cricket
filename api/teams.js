@@ -70,12 +70,11 @@ router.get("/getTeamCoach/:id", (req, res) => {
 });
 
 router.put("/updateTeam/:id", (req, res) => {
-    const sql = `UPDATE teams SET name = '${req.body.name}', logo = '${req.body.logo}', sponsor = '${req.body.sponsor}' WHERE id = ${req.params.id}`;
-    console.log(sql);
+    const sql = `UPDATE teams SET name = '${req.body.name}', logo = '${req.body.logo}', is_active = '${req.body.is_active}', sponsor = '${req.body.sponsor}' WHERE id = ${req.params.id}`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
-        console.log(result);
+
         res.send(JSON.stringify(result));
     });
 });
