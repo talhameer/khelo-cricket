@@ -43,6 +43,16 @@ router.get("/getTournament/:id", (req, res) => {
     });
 });
 
+router.get("/getTournamentPoints/:id", (req, res) => {
+    const sql = `SELECT teams.name, (COUNT(*) * 2) AS points FROM matches JOIN teams ON matches.winner = teams.id WHERE tournament_id = ${req.params.id} GROUP BY matches.winner`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.json(result);
+    });
+});
+
 router.put("/updateTournament/:id", (req, res) => {
     const sql = `UPDATE tournaments SET name = '${req.body.name}', venue = '${req.body.venue}', start_date = '${req.body.start_date}', end_date = '${req.body.end_date}', winner = ${req.body.winner} WHERE id = ${req.params.id}`;
 
