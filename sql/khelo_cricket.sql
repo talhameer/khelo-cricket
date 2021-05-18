@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2021 at 07:39 PM
+-- Generation Time: May 18, 2021 at 02:43 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -44,8 +44,9 @@ CREATE TABLE `batting_scoreboard` (
 --
 
 INSERT INTO `batting_scoreboard` (`id`, `match_id`, `player_id`, `runs`, `balls`, `sixes`, `fours`, `singles`, `strike_rate`) VALUES
-(4, 1, 2, 41, 25, 12, 20, 9, 1.6),
-(5, 1, 3, 57, 60, 12, 20, 25, 0);
+(4, 1, 2, 37, 25, 2, 4, 9, 1.6),
+(5, 1, 3, 57, 60, 12, 20, 25, 0),
+(6, 2, 3, 41, 25, 2, 5, 9, 1.6);
 
 -- --------------------------------------------------------
 
@@ -81,6 +82,7 @@ INSERT INTO `bowling_scoreboard` (`id`, `match_id`, `player_id`, `overs`, `media
 
 CREATE TABLE `matches` (
   `id` int(11) NOT NULL,
+  `match_type` int(11) DEFAULT 3,
   `team1` int(11) NOT NULL,
   `team2` int(11) NOT NULL,
   `tournament_id` int(11) NOT NULL,
@@ -88,8 +90,10 @@ CREATE TABLE `matches` (
   `time` time DEFAULT NULL,
   `team1_runs` int(11) DEFAULT NULL,
   `team1_wickets` int(11) DEFAULT NULL,
+  `team1_extras` int(11) DEFAULT NULL,
   `team2_runs` int(11) DEFAULT NULL,
   `team2_wickets` int(11) DEFAULT NULL,
+  `team2_extras` int(11) DEFAULT NULL,
   `winner` int(11) DEFAULT NULL,
   `statement` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -98,10 +102,11 @@ CREATE TABLE `matches` (
 -- Dumping data for table `matches`
 --
 
-INSERT INTO `matches` (`id`, `team1`, `team2`, `tournament_id`, `date`, `time`, `team1_runs`, `team1_wickets`, `team2_runs`, `team2_wickets`, `winner`, `statement`) VALUES
-(1, 1, 2, 1, '2021-10-14', NULL, 300, NULL, 299, NULL, 1, NULL),
-(2, 1, 4, 1, '2021-10-12', '09:00:00', 100, 2, 99, 10, 1, 'Anything here'),
-(3, 1, 4, 1, '2021-10-10', '09:00:00', 100, 2, 99, 10, 4, 'Anything here');
+INSERT INTO `matches` (`id`, `match_type`, `team1`, `team2`, `tournament_id`, `date`, `time`, `team1_runs`, `team1_wickets`, `team2_runs`, `team2_wickets`, `team1_extras`, `team2_extras`, `winner`, `statement`) VALUES
+(1, 3, 1, 2, 1, '2021-10-14', NULL, 300, NULL, 299, NULL, NULL, NULL, 1, NULL),
+(2, 3, 1, 4, 1, '2021-10-12', '09:00:00', 100, 2, 99, 10, NULL, NULL, 1, 'Anything here'),
+(3, 3, 1, 4, 1, '2021-10-10', '09:00:00', 100, 2, 99, 10, NULL, NULL, 4, 'Anything here'),
+(4, 3, 2, 4, 2, '2022-10-12', '09:00:00', 100, 2, 99, 10, 2, 10, 4, 'Anything here');
 
 -- --------------------------------------------------------
 
@@ -243,7 +248,7 @@ ALTER TABLE `tournaments`
 -- AUTO_INCREMENT for table `batting_scoreboard`
 --
 ALTER TABLE `batting_scoreboard`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `bowling_scoreboard`
@@ -255,7 +260,7 @@ ALTER TABLE `bowling_scoreboard`
 -- AUTO_INCREMENT for table `matches`
 --
 ALTER TABLE `matches`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `players`
