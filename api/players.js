@@ -64,6 +64,53 @@ router.get("/getPlayer/:id", (req, res) => {
     });
 });
 
+router.get("/getPlayerBattingStats/:id", (req, res) => {
+    const sql = `SELECT
+            COUNT(match_id) AS total_matches,
+            SUM(runs) AS runs,
+            MAX(runs) AS high_score,
+            AVG(runs) AS average,
+            AVG(strike_rate) AS strike_rate,
+            (SELECT COUNT(*) FROM batting_scoreboard WHERE runs >= 50 AND player_id = ${req.params.id}) AS fifties,
+            (SELECT COUNT(*) FROM batting_scoreboard WHERE runs >= 100 AND player_id = ${req.params.id}) AS centuries,
+            SUM(sixes) AS sixes,
+            SUM(fours) AS fours
+        FROM
+            batting_scoreboard
+        WHERE
+            player_id = ${req.params.id}
+        GROUP BY
+            player_id`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.json(result);
+    });
+});
+
+router.get("/getPlayerBowlingStats/:id", (req, res) => {
+    const sql = `SELECT
+            COUNT(match_id) AS total_matches,
+            SUM(runs) AS runs,
+            SUM(wickets) AS wickets,
+            AVG(econ) AS econ,
+            AVG(runs) AS average,
+            (SELECT COUNT(*) FROM bowling_scoreboard WHERE wickets >= 5 AND player_id = ${req.params.id}) AS 5w
+        FROM
+            bowling_scoreboard
+        WHERE
+            player_id = 2
+        GROUP BY
+            player_id`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        res.json(result);
+    });
+});
+
 router.put("/updatePlayer/:id", (req, res) => {
     // const name = req.body.name ? "name = '" + req.body.name + "', " : "";
     // const dob = req.body.dob ? "dob = '" + req.body.dob + "', " : "";
