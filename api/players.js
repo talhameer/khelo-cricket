@@ -13,7 +13,10 @@ router.post("/createPlayer", (req, res) => {
 });
 
 router.post("/setPlayerBattingScore/:id", (req, res) => {
-    let runs = req.body.fours + req.body.sixes + req.body.singles;
+    let runs =
+        parseInt(req.body.fours) * 4 +
+        parseInt(req.body.sixes) * 6 +
+        parseInt(req.body.singles);
     const sql = `INSERT INTO batting_scoreboard (player_id, match_id, runs, balls, sixes, fours, singles, strike_rate) VALUES ('${req.params.id}', '${req.body.match_id}', '${runs}', '${req.body.balls}', '${req.body.sixes}', '${req.body.fours}', '${req.body.singles}', '${req.body.strike_rate}')`;
     db.query(sql, (err, result) => {
         if (err) throw err;
