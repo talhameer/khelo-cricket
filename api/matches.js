@@ -4,7 +4,7 @@ const db = require("../config/database");
 const router = express.Router();
 
 router.post("/createMatch", (req, res) => {
-    const sql = `INSERT INTO matches (team1, team2, date, time, tournament_id) VALUES ( ${req.body.team1}, ${req.body.team2}, '${req.body.date}', '${req.body.time}', ${req.body.tournament})`;
+    const sql = `INSERT INTO matches (match_type, team1, team2, date, time, tournament_id) VALUES (${req.body.match_type}, ${req.body.team1}, ${req.body.team2}, '${req.body.date}', '${req.body.time}', ${req.body.tournament})`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
@@ -14,7 +14,7 @@ router.post("/createMatch", (req, res) => {
 });
 
 router.post("/setMatchResults/:id", (req, res) => {
-    let sql = `UPDATE matches SET team1_runs = '${req.body.team1_runs}', team1_wickets = '${req.body.team1_wickets}', team2_runs = '${req.body.team2_runs}', team2_wickets = '${req.body.team2_wickets}', winner = '${req.body.winner}', statement = '${req.body.statement}' WHERE id = ${req.params.id}`;
+    let sql = `UPDATE matches SET team1_runs = '${req.body.team1_runs}', team1_wickets = '${req.body.team1_wickets}', team1_extras = '${req.body.team1_extras}', team2_runs = '${req.body.team2_runs}', team2_wickets = '${req.body.team2_wickets}', team2_extras = '${req.body.team2_extras}', winner = '${req.body.winner}', statement = '${req.body.statement}' WHERE id = ${req.params.id}`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
