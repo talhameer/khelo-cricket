@@ -86,7 +86,7 @@ router.get("/getPlayerBowlingStats/:id", (req, res) => {
             SUM(wickets) AS wickets,
             AVG(econ) AS econ,
             AVG(runs) AS average,
-            (SELECT COUNT(*) FROM bowling_scoreboard WHERE wickets >= 5 AND player_id = ${req.params.id}) AS 5w
+            (SELECT COUNT(*) FROM bowling_scoreboard WHERE wickets >= 5 AND player_id = ${req.params.id}) AS five_w
         FROM
             bowling_scoreboard
         WHERE
