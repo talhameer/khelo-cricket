@@ -44,7 +44,19 @@ router.get("/getTournament/:id", (req, res) => {
 });
 
 router.get("/getTournamentPoints/:id", (req, res) => {
-    const sql = `SELECT teams.name, (COUNT(*) * 2) AS points FROM matches JOIN teams ON matches.winner = teams.id WHERE tournament_id = ${req.params.id} GROUP BY matches.winner`;
+    const sql = `SELECT
+                    teams.name,
+                    (SELECT COUNT(*) FROM matches WHERE (team1 = teams.id OR team2 = teams.id) AND tournament_id = ${req.params.id}) AS matches_played,
+                    COUNT(*) AS win,
+                    ((SELECT COUNT(*) FROM matches WHERE (team1 = teams.id OR team2 = teams.id) AND tournament_id = ${req.params.id}) - COUNT(*)) AS loss,
+                    (COUNT(*) * 2) AS points
+                FROM
+                    matches
+                JOIN teams ON matches.winner = teams.id
+                WHERE
+                    tournament_id = ${req.params.id}
+                GROUP BY
+                    teams.name`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
