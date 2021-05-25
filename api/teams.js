@@ -74,7 +74,15 @@ router.get("/getTeamPlayers/:id", (req, res) => {
 });
 
 router.get("/getTeamCoach/:id", (req, res) => {
-    const sql = `SELECT  coach, coach_dob, coach_experience, coach_expertise FROM teams where id = ${req.params.id}`;
+    const sql = `SELECT
+                    coach,
+                    coach_dob,
+                    coach_experience,
+                    coach_expertise
+                FROM
+                    teams
+                WHERE
+                    id = ${req.params.id}`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
@@ -84,7 +92,15 @@ router.get("/getTeamCoach/:id", (req, res) => {
 });
 
 router.put("/updateTeam/:id", (req, res) => {
-    const sql = `UPDATE teams SET name = '${req.body.name}', logo = '${req.body.logo}', is_active = '${req.body.is_active}', sponsor = '${req.body.sponsor}' WHERE id = ${req.params.id}`;
+    const sql = `UPDATE
+                    teams
+                SET NAME
+                    = '${req.body.name}',
+                    logo = '${req.body.logo}',
+                    is_active = '${req.body.is_active}',
+                    sponsor = '${req.body.sponsor}'
+                WHERE
+                    id = ${req.params.id}`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
@@ -94,12 +110,19 @@ router.put("/updateTeam/:id", (req, res) => {
 });
 
 router.put("/updateTeamCoach/:id", (req, res) => {
-    const sql = `UPDATE teams SET coach = '${req.body.coach}', coach_dob = '${req.body.coach_dob}', coach_experience = '${req.body.coach_experience}', coach_expertise = '${req.body.coach_expertise}' WHERE id = ${req.params.id}`;
-    console.log(sql);
+    const sql = `UPDATE
+                    teams
+                SET
+                    coach = '${req.body.coach}',
+                    coach_dob = '${req.body.coach_dob}',
+                    coach_experience = '${req.body.coach_experience}',
+                    coach_expertise = '${req.body.coach_expertise}'
+                WHERE
+                    id = ${req.params.id}`;
 
     db.query(sql, (err, result) => {
         if (err) throw err;
-        console.log(result);
+
         res.send(JSON.stringify(result));
     });
 });
@@ -109,7 +132,7 @@ router.delete("/deleteTeam/:id", (req, res) => {
 
     db.query(sql, (err, result) => {
         if (err) throw err;
-        console.log(result);
+
         res.send(JSON.stringify(result));
     });
 });
