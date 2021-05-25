@@ -18,24 +18,28 @@ const storage = multer.diskStorage({
 let upload = multer({ storage });
 
 router.post("/createTeam", upload.single("logo"), (req, res) => {
-    let query = "SELECT MAX(`id`) as id FROM `teams`";
-
+    let query = `INSERT INTO teams(
+                name,
+                logo,
+                coach,
+                coach_experience,
+                coach_expertise,
+                coach_dob,
+                sponsor
+            )
+            VALUES(
+                '${req.body.name}',
+                '/uploads/${req.file.filename}',
+                '${req.body.coach}',
+                '${req.body.coach_experience}',
+                '${req.body.coach_expertise}',
+                '${req.body.coach_dob}',
+                '${req.body.sponsor}'
+            )`;
     db.query(query, (err, result) => {
         if (err) throw err;
-        result = JSON.parse(JSON.stringify(result));
 
-        query = `INSERT INTO teams (id, name, logo, coach, coach_experience, coach_expertise, coach_dob, sponsor) VALUES ('${
-            result[0].id + 1
-        }', '${req.body.name}', '/uploads/${req.file.filename}', '${
-            req.body.coach
-        }', '${req.body.coach_experience}', '${req.body.coach_expertise}', '${
-            req.body.coach_dob
-        }', '${req.body.sponsor}')`;
-
-        db.query(query, (err, result) => {
-            if (err) throw err;
-            res.send(JSON.stringify(result));
-        });
+        res.send(JSON.stringify(result));
     });
 });
 
